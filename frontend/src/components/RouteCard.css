@@ -1,0 +1,224 @@
+.route-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 20px;
+}
+
+.route-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  border-color: #667eea;
+}
+
+.route-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.train-number {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.train-type {
+  background: #667eea;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.route-admin-actions {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.edit-link {
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.edit-link:hover {
+  background: #edf2f7;
+  border-color: #cbd5e0;
+}
+
+.route-journey {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 0 10px;
+}
+
+.station {
+  flex: 1;
+  text-align: center;
+}
+
+.station-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 8px;
+}
+
+.time {
+  font-size: 20px;
+  font-weight: 700;
+  color: #667eea;
+  margin-bottom: 4px;
+}
+
+.date {
+  font-size: 14px;
+  color: #718096;
+}
+
+.journey-arrow {
+  font-size: 24px;
+  color: #a0aec0;
+  margin: 0 20px;
+  font-weight: bold;
+}
+
+.route-stops-preview {
+  margin: 15px 0;
+  padding: 10px;
+  background: #f7fafc;
+  border-radius: 6px;
+  border-left: 3px solid #667eea;
+}
+
+.stops-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stops-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.stop-preview {
+  font-size: 13px;
+  color: #2d3748;
+  background: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+.more-stops {
+  font-size: 12px;
+  color: #718096;
+  font-style: italic;
+}
+
+.route-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.seats {
+  font-size: 14px;
+  color: #718096;
+  flex: 1;
+}
+
+.favorites-btn {
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.favorites-btn:hover {
+  background: #edf2f7;
+  border-color: #cbd5e0;
+}
+
+.favorites-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.view-details-btn {
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.view-details-btn:hover {
+  background: #5a67d8;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .route-card {
+    padding: 15px;
+  }
+
+  .route-journey {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .journey-arrow {
+    transform: rotate(90deg);
+    margin: 10px 0;
+  }
+
+  .route-details {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .favorites-btn,
+  .view-details-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

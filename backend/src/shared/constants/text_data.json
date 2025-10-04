@@ -1,0 +1,8 @@
+{
+  "register": {
+    "usernameAlreadyExists": "Username already exists"
+  },
+  "login": {
+    "invalidCredentials": "Invalid credentials"
+  }
+}

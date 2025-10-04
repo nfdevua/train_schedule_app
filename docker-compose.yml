@@ -1,0 +1,119 @@
+# version: '3.8'
+
+# better to create a .env file for the environment variables, but its just test for now so I don't wanna do that :)
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: train-schedule-postgres
+    environment:
+      POSTGRES_DB: train_schedule
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
+    networks:
+      - train-schedule-network
+    restart: unless-stopped
+
+  # PostgreSQL Admin, only for development
+  postgres-admin:
+    image: dpage/pgadmin4
+    container_name: train-schedule-pgadmin
+    ports:
+      - "8080:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: postgres123
+    networks:
+      - train-schedule-network
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: train-schedule-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - train-schedule-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+  # Backend API Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: train-schedule-backend
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://postgres:postgres123@postgres:5432/train_schedule
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres123
+      DB_NAME: train_schedule
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD:
+      JWT_SECRET: your-super-secret-jwt-key-here
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - train-schedule-network
+    restart: unless-stopped
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - backend_logs:/app/logs
+
+  # Frontend Web Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: train-schedule-frontend
+    environment:
+      NODE_ENV: production
+      WDS_SOCKET_PORT: 0 # disable websocket for live reload for frontend
+    ports:
+      - "3001:3000"
+    depends_on:
+      - backend
+    networks:
+      - train-schedule-network
+    restart: unless-stopped
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - frontend_logs:/app/logs
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  backend_logs:
+    driver: local
+  frontend_logs:
+    driver: local
+  pgadmin_data:
+    driver: local
+
+networks:
+  train-schedule-network:
+    driver: bridge

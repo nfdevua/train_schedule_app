@@ -1,0 +1,144 @@
+/* Dashboard Header Styles */
+.dashboard-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header .header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.dashboard-header .header-actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.dashboard-header .nav-button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.dashboard-header .nav-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.dashboard-header .admin-button {
+  background: rgba(255, 255, 255, 0.3);
+  font-weight: 500;
+}
+
+.dashboard-header .logout-button {
+  background: rgba(220, 38, 38, 0.8);
+  color: white;
+  border: 1px solid rgba(220, 38, 38, 0.9);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.dashboard-header .logout-button:hover {
+  background: rgba(220, 38, 38, 1);
+}
+
+/* Admin Header Styles */
+.admin-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin-header .header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.admin-header .header-actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.admin-header .nav-button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.admin-header .nav-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.admin-header .admin-button {
+  background: rgba(255, 255, 255, 0.3);
+  font-weight: 500;
+}
+
+.admin-header .logout-button {
+  background: rgba(220, 38, 38, 0.8);
+  color: white;
+  border: 1px solid rgba(220, 38, 38, 0.9);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.admin-header .logout-button:hover {
+  background: rgba(220, 38, 38, 1);
+}
+
+@media (max-width: 768px) {
+  .dashboard-header .header-content,
+  .admin-header .header-content {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .dashboard-header .header-actions,
+  .admin-header .header-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
