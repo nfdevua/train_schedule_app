@@ -20,21 +20,21 @@ services:
     restart: unless-stopped
 
   # PostgreSQL Admin, only for development
-  postgres-admin:
-    image: dpage/pgadmin4
-    container_name: train-schedule-pgadmin
-    ports:
-      - "8080:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: pgadmin@pgadmin.org
-      PGADMIN_DEFAULT_PASSWORD: postgres123
-    networks:
-      - train-schedule-network
-    restart: unless-stopped
-    depends_on:
-      - postgres
-    volumes:
-      - pgadmin_data:/var/lib/pgadmin
+  # postgres-admin:
+  #   image: dpage/pgadmin4
+  #   container_name: train-schedule-pgadmin
+  #   ports:
+  #     - "8080:80"
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: pgadmin@pgadmin.org
+  #     PGADMIN_DEFAULT_PASSWORD: postgres123
+  #   networks:
+  #     - train-schedule-network
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - postgres
+  #   volumes:
+  #     - pgadmin_data:/var/lib/pgadmin
 
   # Redis Cache
   redis:

@@ -52,8 +52,6 @@ docker compose ps
 ### Option 3: Local Development
 
 ```bash
-# Start databases
-
 # Install backend dependencies
 cd backend
 npm install
@@ -76,6 +74,7 @@ After successful startup, the application will be available at:
 
 - **Frontend**: http://localhost:3001
 - **Backend API**: http://localhost:3000
+- **Swagger** http://localhost:3000/api
 - **PostgreSQL Admin**: http://localhost:8080
   - Email: `pgadmin@pgadmin.org`
   - Password: `postgres123`
