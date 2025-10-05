@@ -8,6 +8,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcryptjs';
 import { User } from 'src/entities/user.entity';
 import { RegisterDto } from 'src/auth/dto/register.dto';
@@ -15,8 +16,6 @@ import { LoginDto } from 'src/auth/dto/login.dto';
 import { MESSAGES, userRoles } from 'src/shared/constants/constants';
 import { RedisService } from 'src/redis/redis.service';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'; // todo: move to .env
-// can be pushed in .env
 const SALT_ROUNDS = 10;
 
 interface JwtPayload {
@@ -33,6 +32,7 @@ export class AuthService {
     private userRepository: Repository<User>,
     private jwtService: JwtService,
     private redisService: RedisService,
+    private configService: ConfigService,
   ) {}
 
   private generateToken(userId: string, role: string): string {
@@ -110,8 +110,9 @@ export class AuthService {
 
   async validateToken(token: string): Promise<JwtPayload> {
     try {
+      const jwtSecret = this.configService.get<string>('JWT_SECRET');
       return this.jwtService.verify(token, {
-        secret: JWT_SECRET,
+        secret: jwtSecret,
       });
     } catch {
       throw new UnauthorizedException('Invalid or expired token');

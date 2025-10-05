@@ -181,7 +181,6 @@ docker compose up -d postgres redis
 
 Main variables are configured in `docker-compose.yml`:
 
-- `DATABASE_URL` - PostgreSQL connection string
 - `JWT_SECRET` - secret key for JWT tokens
 - `REDIS_HOST` - Redis server host
 - `NODE_ENV` - environment (production/development)

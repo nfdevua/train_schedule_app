@@ -1,6 +1,5 @@
 # version: '3.8'
 
-# better to create a .env file for the environment variables, but its just test for now so I don't wanna do that :)
 services:
   # PostgreSQL Database
   postgres:
@@ -55,19 +54,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: train-schedule-backend
-    environment:
-      NODE_ENV: production
-      DATABASE_URL: postgresql://postgres:postgres123@postgres:5432/train_schedule
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_USERNAME: postgres
-      DB_PASSWORD: postgres123
-      DB_NAME: train_schedule
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      REDIS_PASSWORD:
-      JWT_SECRET: your-super-secret-jwt-key-here
-      PORT: 3000
+    env_file:
+      - ./backend/.env
     ports:
       - "3000:3000"
     depends_on:
@@ -80,6 +68,7 @@ services:
       - ./backend:/app
       - /app/node_modules
       - backend_logs:/app/logs
+      - ./backend/.env:/app/.env
 
   # Frontend Web Service
   frontend:
@@ -87,8 +76,9 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: train-schedule-frontend
+    env_file:
+      - ./frontend/.env
     environment:
-      NODE_ENV: production
       WDS_SOCKET_PORT: 0 # disable websocket for live reload for frontend
     ports:
       - "3001:3000"
@@ -101,6 +91,7 @@ services:
       - ./frontend:/app
       - /app/node_modules
       - frontend_logs:/app/logs
+      - ./frontend/.env:/app/.env
 
 volumes:
   postgres_data:
