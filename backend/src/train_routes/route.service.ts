@@ -13,6 +13,7 @@ import { IMessageResponse } from 'src/train_routes/interfaces/message-response.i
 import { validateStopsTimes } from 'src/train_routes/helpers/stops-validation.helper';
 import { MESSAGES } from 'src/shared/constants/constants';
 import { RedisService } from 'src/redis/redis.service';
+import { CACHE_KEYS, CACHE_CONFIG } from 'src/config/cache.config';
 
 @Injectable()
 export class RouteService {
@@ -77,21 +78,18 @@ export class RouteService {
       ...otherFields
     } = getDto;
 
-    const hasFilters =
-      search ||
-      departure_date ||
-      arrival_date ||
-      Object.keys(otherFields).length > 0;
+    const cacheKey = CACHE_KEYS.ROUTES.LIST({
+      limit,
+      offset,
+      search,
+      departure_date,
+      arrival_date,
+      ...otherFields,
+    });
 
-    if (!hasFilters) {
-      const cacheKey = `routes:standard:${limit}:${offset}`;
-      const cachedData = (await this.redisService.get(
-        cacheKey,
-      )) as IRoutesResponse | null;
-
-      if (cachedData) {
-        return cachedData;
-      }
+    const cachedData = await this.redisService.get<IRoutesResponse>(cacheKey);
+    if (cachedData) {
+      return cachedData;
     }
 
     let whereConditions: Record<string, unknown> | Record<string, unknown>[] = {
@@ -188,19 +186,14 @@ export class RouteService {
       totalPages,
     };
 
-    if (!hasFilters) {
-      const cacheKey = `routes:standard:${limit}:${offset}`;
-      await this.redisService.set(cacheKey, response, 60 * 60 * 1000);
-    }
+    await this.redisService.set(cacheKey, response, CACHE_CONFIG.routes.list);
 
     return response;
   }
 
   async getOne(id: string): Promise<IRouteResponse> {
-    const cacheKey = `route:${id}`;
-    const cachedRoute = (await this.redisService.get(
-      cacheKey,
-    )) as IRouteResponse | null;
+    const cacheKey = CACHE_KEYS.ROUTES.SINGLE(id);
+    const cachedRoute = await this.redisService.get<IRouteResponse>(cacheKey);
 
     if (cachedRoute) {
       return cachedRoute;
@@ -222,7 +215,11 @@ export class RouteService {
 
     const transformedRoute = this.transformRouteToResponse(route);
 
-    await this.redisService.set(cacheKey, transformedRoute, 60 * 60 * 1000);
+    await this.redisService.set(
+      cacheKey,
+      transformedRoute,
+      CACHE_CONFIG.routes.single,
+    );
 
     return transformedRoute;
   }

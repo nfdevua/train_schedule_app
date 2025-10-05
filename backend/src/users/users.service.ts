@@ -8,14 +8,15 @@ import {
   FavoritesListResponseDto,
 } from './dto/user-response.dto';
 import { MESSAGES } from 'src/shared/constants/constants';
+import { RedisService } from 'src/redis/redis.service';
+import { CACHE_KEYS, CACHE_CONFIG } from 'src/config/cache.config';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User)
-    private usersRepository: Repository<User>,
     @InjectRepository(Favorite)
     private favoritesRepository: Repository<Favorite>,
+    private redisService: RedisService,
   ) {}
 
   async toggleFavorites(user_id: string, route_id: string): Promise<boolean> {
@@ -27,6 +28,7 @@ export class UsersService {
       .catch();
 
     if (existingFavorite.affected === 1) {
+      await this.invalidateUserFavoritesCache(user_id);
       return false;
     }
 
@@ -37,10 +39,24 @@ export class UsersService {
 
     await this.favoritesRepository.save(favorite);
 
+    await this.invalidateUserFavoritesCache(user_id);
+
     return true;
   }
 
+  private async invalidateUserFavoritesCache(userId: string): Promise<void> {
+    await this.redisService.del(CACHE_KEYS.FAVORITES.LIST(userId));
+  }
+
   async getUserFavorites(user_id: string): Promise<FavoritesListResponseDto> {
+    const cacheKey = CACHE_KEYS.FAVORITES.LIST(user_id);
+
+    const cachedFavorites =
+      await this.redisService.get<FavoritesListResponseDto>(cacheKey);
+    if (cachedFavorites) {
+      return cachedFavorites;
+    }
+
     const favorites = await this.favoritesRepository
       .createQueryBuilder('favorites')
       .leftJoinAndSelect('favorites.route', 'routes')
@@ -63,9 +79,13 @@ export class UsersService {
       }),
     );
 
-    return {
+    const result = {
       favorites: favoritesResponse,
       total: favorites.length,
     };
+
+    await this.redisService.set(cacheKey, result, CACHE_CONFIG.favorites.list);
+
+    return result;
   }
 }

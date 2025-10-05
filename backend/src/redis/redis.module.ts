@@ -11,11 +11,14 @@ import { RedisService } from './redis.service';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         store: redisStore as any,
-        host: configService.get('REDIS_HOST', 'localhost'),
-        port: configService.get('REDIS_PORT', 6379),
-        password: configService.get('REDIS_PASSWORD'),
+        host: configService.get<string>('REDIS_HOST'),
+        port: configService.get<number>('REDIS_PORT'),
+        password: configService.get<string>('REDIS_PASSWORD'),
         ttl: 30 * 24 * 60 * 60 * 1000, // 30 days in milliseconds
         max: 1000,
+        retryDelayOnFailover: 100,
+        enableReadyCheck: false,
+        maxRetriesPerRequest: 3,
       }),
       inject: [ConfigService],
     }),

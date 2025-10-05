@@ -29,37 +29,21 @@ Web application for managing train schedules with admin panel and user interface
 
 ## 🚀 Quick Start
 
-### Option 1: Using Make (Recommended)
-
-```bash
-# Build and start all services
-make up-build
-
-# Check service status
-make status
-```
-
-### Option 2: Using Docker Compose
-
-```bash
-# Build and start all services
-docker compose up --build -d
-
-# Check service status
-docker compose ps
-```
-
-### Option 3: Local Development
-
 ```bash
 # Install backend dependencies
 cd backend
 npm install
+# Copy environment variables example file
+cp .env.example .env
+
 
 # In a new terminal, install frontend dependencies
 cd ../frontend
 npm install
+# Copy environment variables example file
+cp .env.example .env
 
+# Back to work with compouse file
 cd ..
 
 make build up
@@ -75,7 +59,7 @@ After successful startup, the application will be available at:
 - **Frontend**: http://localhost:3001
 - **Backend API**: http://localhost:3000
 - **Swagger** http://localhost:3000/api
-- **PostgreSQL Admin**: http://localhost:8080
+- (if uncommend in docker-compouse) **PostgreSQL Admin**: http://localhost:8080
   - Email: `pgadmin@pgadmin.org`
   - Password: `postgres123`
 
