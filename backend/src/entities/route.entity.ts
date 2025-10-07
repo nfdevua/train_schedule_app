@@ -7,7 +7,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { TrainType } from 'src/shared/types/trainType';
-import { IRoute } from 'src/shared/schemas/route.schema';
+import { IRoute } from 'src/shared/interfaces/route.interface';
 import { RouteStop } from './route_stop.entity';
 
 @Entity('routes')

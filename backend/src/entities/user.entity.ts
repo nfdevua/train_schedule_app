@@ -5,8 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserRole } from 'src/shared/schemas/user.schema';
-import { IUser } from 'src/shared/schemas/user.schema';
+import { IUser, UserRole } from 'src/shared/interfaces/user.interface';
 
 @Entity('users')
 export class User implements IUser {

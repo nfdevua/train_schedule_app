@@ -9,7 +9,7 @@ import {
 import { UsersService } from './users.service';
 import { AddToFavoritesDto } from './dto/add-to-favorites.dto';
 import { FavoritesListResponseDto } from './dto/user-response.dto';
-import { RequestWithDecodedData } from 'src/common/guards/jwt-auth.guard';
+import { RequestWithDecodedData } from 'src/common/interfaces/request-with-decoded-data.interface';
 
 @ApiTags('Users')
 @ApiBearerAuth('JWT-auth')

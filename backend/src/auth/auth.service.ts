@@ -15,15 +15,9 @@ import { RegisterDto } from 'src/auth/dto/register.dto';
 import { LoginDto } from 'src/auth/dto/login.dto';
 import { MESSAGES, userRoles } from 'src/shared/constants/constants';
 import { RedisService } from 'src/redis/redis.service';
+import { JwtPayload } from 'src/auth/interfaces/jwt-payload.interface';
 
 const SALT_ROUNDS = 10;
-
-interface JwtPayload {
-  sub: string;
-  role: string;
-  iat?: number;
-  exp?: number;
-}
 
 @Injectable()
 export class AuthService {

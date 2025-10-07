@@ -1,4 +1,4 @@
-import { UserRole } from 'src/shared/schemas/user.schema';
+import { UserRole } from 'src/shared/interfaces/user.interface';
 
 // this file can be split into multiple files, but not so much data so staying here for now
 

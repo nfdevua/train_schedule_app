@@ -1,16 +1,4 @@
-export interface CacheConfig {
-  routes: {
-    single: number;
-    list: number;
-  };
-  users: {
-    profile: number;
-    session: number;
-  };
-  favorites: {
-    list: number;
-  };
-}
+import { CacheConfig } from 'src/shared/interfaces/cache-config.interface';
 
 export const CACHE_CONFIG: CacheConfig = {
   routes: {

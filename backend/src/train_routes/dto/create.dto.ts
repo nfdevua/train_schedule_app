@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
-import { IRoute } from 'src/shared/schemas/route.schema';
+import { IRoute } from 'src/shared/interfaces/route.interface';
 import { TrainType } from 'src/shared/types/trainType';
 import { RouteStopDto } from './route-stop.dto';
 

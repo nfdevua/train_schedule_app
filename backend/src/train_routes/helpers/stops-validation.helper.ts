@@ -1,11 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
-
-export interface RouteStop {
-  id?: string;
-  station: string;
-  time_arrival: string | Date | null;
-  order_index: number;
-}
+import { RouteStop } from 'src/shared/interfaces/route-stop.interface';
 
 export function validateStopsTimes(
   stops: RouteStop[],
